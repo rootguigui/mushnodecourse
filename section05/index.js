@@ -1,3 +1,4 @@
+const config = require('config');
 const Joi = require('joi');
 const express = require("express");
 const app = express();
@@ -16,6 +17,11 @@ app.use(express.json()); //req.body
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 app.use(helmet());
+
+// Configuration
+console.log("Application name: " + config.get('name'));
+// configuração para colocar o password em uma variavel do sistema 
+console.log("Mail Server: " + config.get('mail.password'));
 
 if (app.get('env') === 'development') {
     app.use(morgan('tiny'));
