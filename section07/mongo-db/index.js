@@ -56,10 +56,37 @@ async function getCourses() {
         .limit(10)
         .sort({ name: 1 })
         .select({ name: 1, tags: 1 , author: 1 })
-        .count();
+        // .count();
 
     console.log(courses);
 }
 
-getCourses();
+async function updateCourse(id) {
+    // const course = await Course.findById(id);
+    // if (!course) return;
+
+    // course.set({
+    //     isPublished: false,
+    //     author: 'another author'
+    // });
+
+    // const result = await course.save();
+    // console.log(result);
+    const course = await Course.findByIdAndUpdate(id, {
+        $set: {
+            author: 'Guilherme',
+            isPublished: true
+        }
+    }, { new: true });
+    console.log(course);
+}
+
+async function deleteCourse(id) {
+    const course = await Course.findByIdAndRemove(id);
+    console.log(course);
+}
+
+deleteCourse('5e0ebdf1a3b05f048e8b8fcf')
+// updateCourse('5e0ebdf1a3b05f048e8b8fcf');
+// getCourses();
 // createCourse();
