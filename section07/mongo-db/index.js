@@ -51,11 +51,12 @@ async function getCourses() {
     const courses = await Course
         // .find({ author: 'Mosh' })
         // .find({ isPublished: { $eq: true }})
-        .find({ author: /.*Guilherme.*/i })
+        .find({ author: /.*M.*/i })
         // .or([{ author: 'Mosh' },{ isPublished: true }])
         .limit(10)
         .sort({ name: 1 })
-        .select({ name: 1, tags: 1 , author: 1 });
+        .select({ name: 1, tags: 1 , author: 1 })
+        .count();
 
     console.log(courses);
 }
