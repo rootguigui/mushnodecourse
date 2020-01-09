@@ -15,29 +15,46 @@ const courseSchema = new mongoose.Schema({
     category: {
         type: String,
         enum: ['web', 'mobile', 'api'],
+        lowercase: true,
+        trim: true,
         required: true
     },
     author: String,
-    tags: [ String ],
+    tags: {
+        type: Array,
+        validate: {
+            isAsync: true,
+            validator: function (v, callback) {
+                setTimeout(() => {
+                    // Do some async work
+                    const result  = v && v.length > 0;
+                    callback(result);
+                }, 1000)
+            },
+            message: 'A course should have at least one tag.'
+        }
+    },
     date: { type: Date, default: Date.now },
     isPublished: Boolean,
     price: {
         type: Number,
         required: function() { return this.isPublished; },
         min: 10,
-        max: 200
+        max: 200,
+        get: v => Math.round(v),
+        set: v => Math.round(v),
     }
 });
 
 const Course = mongoose.model('Course', courseSchema);
 
 const course = new Course({
-    name: 'React Native Course',
+    name: 'React Native Course - teste validator case',
     author: 'Guilherme Almeida',
-    category: 'web',
+    category: ' WEB',
     tags: [ 'React-Native', 'Mobile', 'frontend' ],
     isPublished: true,
-    price: 9
+    price: 15.8
 });
 
 async function createCourse() {
@@ -47,7 +64,11 @@ async function createCourse() {
         console.log('course is saved...', result);
 
     } catch (ex) {
-        console.log(ex.message);
+        for (field in ex.errors) {
+            const { properties } = ex.errors[field];
+            console.log(properties.message);
+        }
+        
     }
 }
 
