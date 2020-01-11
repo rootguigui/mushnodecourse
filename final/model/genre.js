@@ -21,4 +21,4 @@ function validateGenre(genre) {
 }
 
 exports.Genre = Genre;
-exports.valdiate = validateGenre;
+exports.validate = validateGenre;
