@@ -8,6 +8,7 @@ const MovieSchema = new mongoose.Schema({
         type: String,
         minlength: 5,
         maxlength: 60,
+        trim: true,
         required: true
     },
     genreId: {
