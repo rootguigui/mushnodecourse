@@ -1,3 +1,5 @@
+const Joi = require('joi');
+Joi.objectId = require('joi-objectid')(Joi);
 const express = require('express');
 const router = express.Router();
 const { Movie, validate } = require('../model/movie');
