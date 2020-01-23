@@ -2,6 +2,12 @@ const express = require('express');
 const app = express();
 const port = process.env.PORT || 3000;
 const mongoose = require('mongoose')
+const config = require('config');
+
+if (!config.get('jwtPrivateKey')) {
+    console.log('[SERVER]: FATAL ERROR -> Private Key is not defined.');
+    process.exit(1);
+}
 
 mongoose.connect('mongodb://localhost/vidly', 
     { 
