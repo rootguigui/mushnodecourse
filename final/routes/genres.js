@@ -3,14 +3,11 @@ const admin = require('../middleware/admin');
 const express = require('express');
 const router = express.Router();
 const { Genre, validate } = require('../model/genre');
+require('express-async-errors');
 
 router.get('/', async (req, res) => {
-    try {
-        const genres = await Genre.find().sort({ name: 1 });
-        res.send(genres);
-    } catch (ex) {
-        res.status(400).send(ex);
-    }
+    const genres = await Genre.find().sort({ name: 1 });
+    res.send(genres);
 });
 
 router.post('/', auth, async (req, res) => {
