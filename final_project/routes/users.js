@@ -19,12 +19,13 @@ router.post('/', async (req, res) => {
     if (userFound) return res.status(400).send('User already registered.');
 
     
-    let objUser = _.pick(req.body, ['name', 'email', 'password']);
+    let objUser = _.pick(req.body, ['name', 'email', 'password', 'isAdmin']);
     let user = new User(objUser);
     const salt = await bcrypt.genSalt(10, user.password);
     user.password = await bcrypt.hash(user.password, salt); 
     
     const result = await user.save();
+
     const token = result.generateAuthToken();
     res.header('x-auth-token', token).send(_.pick(result, [ '_id', 'name', 'email' ]));
 });
