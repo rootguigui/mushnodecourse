@@ -1,11 +1,13 @@
 const express = require('express');
 const app = express();
 const winston = require('winston');
+const cors = require('cors');
 
 const port = process.env.PORT || 3000;
 
-require('./startup/logging')();
+app.use(cors());
 require('./startup/routes')(app);
+require('./startup/logging')();
 require('./startup/db')();
 require('./startup/config');
 
