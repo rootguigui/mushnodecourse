@@ -1,14 +1,4 @@
-const express = require('express');
-const app = express();
-const winston = require('winston');
-const cors = require('cors');
+const container = require('./startup/index');
+const app = container.resolve('app');
 
-const port = process.env.PORT || 3000;
-
-app.use(cors());
-require('./startup/routes')(app);
-require('./startup/logging')();
-require('./startup/db')();
-require('./startup/config');
-
-app.listen(port, () => winston.info(`[SERVER]: App listening on port ${port}!`));
+app.start();
