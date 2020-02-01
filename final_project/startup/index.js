@@ -16,5 +16,4 @@ container.register({
     routes: asFunction(routes).singleton(),
 });
 
-
 module.exports = container;
